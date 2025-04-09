@@ -34,7 +34,7 @@ void menu(){
 				printf("Punto Palindromos\n");
 				printf("Ingrese una palabra a comprobar  Palindromos\n");
 				char palabra_palin[100];
-				scanf("%c", palabra_palin);
+				scanf("%s", palabra_palin);
 				if(palindromo(palabra_palin)){
 					printf("%s es un palindromo\n", palabra_palin);
 				}else{	
@@ -97,7 +97,7 @@ void menu(){
 				printf("Ejercicio 7\n");
 				printf("Se necesita ingresar la onda codificada:\n");
 				char onda[100]; 
-				scanf("%c",onda);
+				scanf("%s",onda);
 				printf("El resultado es: %s\n", ondaDigital(onda));
 				printf("Fin Ejercicio 7\n");
 				menu();
@@ -136,17 +136,17 @@ void menu(){
 				//scanf("%d",&bomba);
 				//int reventar[100] = explosion(numero,bomba); 
 				//printf("El resultado es: [");
-					//reccorido del array reventar 
+				//reccorido del array reventar 
 				//printf("Fin Ejercicio 10\n");
 				menu();
 				break;
 
 
 
-				
+
 			default:
-			// code block
-			}
+				// code block
+		}
 	}
 }
 
@@ -154,19 +154,19 @@ void menu(){
 
 //Funcion Auxiliar Palindromo
 char *recortar_extremos(char *original) {
-    int len = strlen(original);
-    if (len <= 2) {
-        // Si tiene 2 o menos caracteres, devolvemos cadena vacía
-        char *vacio = malloc(1);
-        vacio[0] = '\0';
-        return vacio;
-    }
-    // Reservamos espacio para los caracteres del medio + '\0'
-    char *recorte = malloc(len - 1); // len - 2 letras + 1 '\0'
-    if (!recorte) return NULL;
-    strncpy(recorte, original + 1, len - 2); // Copiamos del segundo al penúltimo
-    recorte[len - 2] = '\0'; // Agregamos terminador
-    return recorte;
+	int len = strlen(original);
+	if (len <= 2) {
+		// Si tiene 2 o menos caracteres, devolvemos cadena vacía
+		char *vacio = malloc(1);
+		vacio[0] = '\0';
+		return vacio;
+	}
+	// Reservamos espacio para los caracteres del medio + '\0'
+	char *recorte = malloc(len - 1); // len - 2 letras + 1 '\0'
+	if (!recorte) return NULL;
+	strncpy(recorte, original + 1, len - 2); // Copiamos del segundo al penúltimo
+	recorte[len - 2] = '\0'; // Agregamos terminador
+	return recorte;
 }
 //Ejercicio 1:
 bool palindromo (char * cadena){
@@ -210,35 +210,35 @@ bool palindromo (char * cadena){
 // Ejercicio 2
 int producto(int m, int n)
 {
-    if ((n == 0 || m == 0))
-    {
-        return 0;
-    }
-    if (n > 0)
-    {
-        n -= 1;
-        return m + producto(m, n);
-    }
-    else
-    {
-        n += 1;
-        return -m + producto(m, n);
-    }
+	if ((n == 0 || m == 0))
+	{
+		return 0;
+	}
+	if (n > 0)
+	{
+		n -= 1;
+		return m + producto(m, n);
+	}
+	else
+	{
+		n += 1;
+		return -m + producto(m, n);
+	}
 }
 // Ejercicio 3
 int terminoSeridFibonacci(int k) {
 	// Caso base
-    if (k == 1 || k == 2) {
+	if (k == 1 || k == 2) {
 		return 1;
-    }
-    // Recursividad 
-    return terminoSeridFibonacci(k - 1) + terminoSeridFibonacci(k - 2);
+	}
+	// Recursividad 
+	return terminoSeridFibonacci(k - 1) + terminoSeridFibonacci(k - 2);
 }
 
 //Ejercicio 4
 /*4.	Dados los números enteros m y n, construir una función recursiva que devuelva el 
-cociente de ambos, calculando el mismo mediante restas sucesivas. Se deberá tener en cuenta que en el caso 
-de que la división no sea exacta, se devolverán hasta 4 cifras decimales (si es necesario). */
+  cociente de ambos, calculando el mismo mediante restas sucesivas. Se deberá tener en cuenta que en el caso 
+  de que la división no sea exacta, se devolverán hasta 4 cifras decimales (si es necesario). */
 
 float division(int m, int n){
 	//m 64 n 5
@@ -263,73 +263,92 @@ float division(int m, int n){
 // Ejercicio 5
 char *agregarSeparadorMiles(char numero[])
 {
-    int len = strlen(numero);
-    if (len <= 3)
-    {
-        char *result = malloc(len + 1);
-        strcpy(result, numero);
-        return result;
-    }
-    char *prefix = malloc(len - 2);
-    strncpy(prefix, numero, len - 3);
-    prefix[len - 3] = '\0';
-    char *proccesedPref = agregarSeparadorMiles(prefix);
-    free(prefix);
-    char *suffix = numero + len - 3;
-    char *result = malloc(strlen(proccesedPref) + 1 + 3 + 1);
-    sprintf(result, "%s.%s", proccesedPref, suffix);
-    free(proccesedPref);
-    return result;
+	int len = strlen(numero);
+	if (len <= 3)
+	{
+		char *result = malloc(len + 1);
+		strcpy(result, numero);
+		return result;
+	}
+	char *prefix = malloc(len - 2);
+	strncpy(prefix, numero, len - 3);
+	prefix[len - 3] = '\0';
+	char *proccesedPref = agregarSeparadorMiles(prefix);
+	free(prefix);
+	char *suffix = numero + len - 3;
+	char *result = malloc(strlen(proccesedPref) + 1 + 3 + 1);
+	sprintf(result, "%s.%s", proccesedPref, suffix);
+	free(proccesedPref);
+	return result;
 }
 
 // Ejercicio 6
 char *reunionMafia(int nivel)
 {
-    if (nivel < 1)
-    {
-        return strdup("0");
-    }
-    if (nivel == 1)
-    {
-        return strdup("(-.-)");
-    }
-    char *centro = reunionMafia(nivel - 1);
-    char *completo = malloc(strlen(centro) + 7);
-    sprintf(completo, "(-.%s.-)", centro);
-    free(centro);
-    return completo;
+	if (nivel < 1)
+	{
+		return strdup("0");
+	}
+	if (nivel == 1)
+	{
+		return strdup("(-.-)");
+	}
+	char *centro = reunionMafia(nivel - 1);
+	char *completo = malloc(strlen(centro) + 7);
+	sprintf(completo, "(-.%s.-)", centro);
+	free(centro);
+	return completo;
 }
+
+//aux7
+char *unir_strings(const char *s1, const char *s2) {
+	int len1 = strlen(s1);
+	int len2 = strlen(s2);
+
+	// +1 para el carácter nulo '\0'
+	char *resultado = malloc(len1 + len2 + 1);
+	if (!resultado) return NULL;
+
+	strcpy(resultado, s1);
+	strcat(resultado, s2);
+
+	return resultado;
+}
+
 
 //Ejercicio 7 
 char * ondaDigital(char * cadena){
+	//Cadena a devolver:
+	char * devolver;
 	if(cadena[0] != '\0'){
 		//printf("f %c", cadena[0]);
 		if(cadena[0] == 'H' || cadena[0]=='L'){
 			if(cadena[0]=='H'){
 				//si el siguiente es el final, si el siguiente es cambio 
-				if( (cadena[1] == 'L')){
-					printf("*|");
-				}else{
-					printf("*");
+				if( (cadena[1] == 'L')){ //printf("*|");
+					devolver = unir_strings("*|", ondaDigital(cadena +1));
+				}else{ //printf("*");
+					devolver = unir_strings("*", ondaDigital(cadena +1));
 				}
 			}else{
-				if( (cadena[1] == 'H')){
-					printf("_|");
-				}else{
-					printf("_");
+				if( (cadena[1] == 'H')){ //printf("_|");
+					devolver = unir_strings("_|", ondaDigital(cadena +1));
+				}else{ //printf("_");
+					devolver = unir_strings("_", ondaDigital(cadena +1));
 				}
 			}
-				}else{
+		}else{
 			printf("Error en la cadena");
 		}
 		//llamar denuevo a la funcion:
 		//nota: No modifica la cadena original, solo cambia el puntero
 		//      Termina en \0 
-		ondaDigital(cadena + 1);
 	}else{
-		printf("\n");
+		//printf("\n");
+		devolver = "";
 		//printf("Fin");
 	}
+	return devolver;
 
 }
 // Ejercicio 8
@@ -339,23 +358,23 @@ char * ondaDigital(char * cadena){
 
 // Ejercicio 9
 /*
-bool divisiblePor7(int n)
-{
-  if (n <= 70)
-    {
-        if ((n % 7) == 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    int parteDecimal = round((((n / 10.0f) - (n / 10)) * 10));
-    int parteEntera = round(n / 10) - parteDecimal * 2;
-    divisiblePor7(parteEntera);
-}
+   bool divisiblePor7(int n)
+   {
+   if (n <= 70)
+   {
+   if ((n % 7) == 0)
+   {
+   return true;
+   }
+   else
+   {
+   return false;
+   }
+   }
+   int parteDecimal = round((((n / 10.0f) - (n / 10)) * 10));
+   int parteEntera = round(n / 10) - parteDecimal * 2;
+   divisiblePor7(parteEntera);
+   }
 
 // Ejercicio 10
 int *explosion(int n, int b)
