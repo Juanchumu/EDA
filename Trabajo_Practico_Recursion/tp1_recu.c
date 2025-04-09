@@ -16,7 +16,7 @@ int main(void){
 void menu_intro(){
 	printf("Seleccione un punto del trabajo practico:\n");
 	printf("(0 - 1 - 2 - 3 - 4 - 5 - 6) \n ");
-	printf("ingrese -1 para terminar la ejecucion ");
+	printf("ingrese -1 para terminar la ejecucion \n");
 }
 
 void menu(){
@@ -54,6 +54,15 @@ void menu(){
 				printf("fin Ej2\n");
 				menu();
 				break;
+			case 3:
+				printf("Ejercicio 3\n");
+				printf("Se necesita ingresar el valor de K\n");
+				int k; 
+				scanf("%d",&k);
+				printf("El resultado es: %d\n", terminoSeridFibonacci(k));
+				printf("Fin Ejercicio 3\n");
+				menu();
+				
 			default:
 			// code block
 			}
@@ -134,6 +143,15 @@ int producto(int m, int n)
         n += 1;
         return -m + producto(m, n);
     }
+}
+// Ejercicio 3
+int terminoSeridFibonacci(int k) {
+	// Caso base
+    if (k == 1 || k == 2) {
+		return 1;
+    }
+    // Recursividad 
+    return terminoSeridFibonacci(k - 1) + terminoSeridFibonacci(k - 2);
 }
 
 
