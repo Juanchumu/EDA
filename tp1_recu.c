@@ -499,6 +499,15 @@ Número: 10
 Bomba: 3 
 explosion(10, 3) => [3 2 1 1 3] 
 NOTA: Se utilizará el valor -1 como entero que indica el final del arreglo devuelto por la función*/
+int medir(int * arr){
+	//devuelve el indice cuando encuentra -1
+	int indice = 0;
+	for(int i = 0; i != -1; i++){
+		indice++;
+	}
+	return indice;
+}
+
 
 int *explosion(int n, int b){
 	int *devolver_fragmentos = NULL;
@@ -509,9 +518,10 @@ int *explosion(int n, int b){
 		N2 = n - ( n / b ); // 6, continua
 		//primero se agrega el arbol de fragmentos generado a partir de N1:
 		if(N1 >b ){
+			printf("N1\n");
 			//recursion,fragmentos crece, ¿que tanto crece?
 			int * revento_n_veces = explosion(N1, b);
-			int crece = sizeof(revento_n_veces) / sizeof(revento_n_veces[0]);
+			int crece = medir(revento_n_veces);
 			fragmentos = fragmentos + crece; 
 			devolver_fragmentos = realloc(devolver_fragmentos, fragmentos * sizeof(int));
 			for(int i = 0; i < crece; i++){
@@ -519,34 +529,47 @@ int *explosion(int n, int b){
 				devolver_fragmentos[posicion] = revento_n_veces[i];
 			}
 		}else{
-			//no hay recursion, se fija un fragmento, N1.
+			printf("N1f\n");
+			//no hay recursion, se fijan dos fragmentos, N1 y -1.
 			fragmentos++; 
 			devolver_fragmentos = realloc(devolver_fragmentos, fragmentos * sizeof(int));
 			devolver_fragmentos[fragmentos-1] = N1;  
+			fragmentos++;
+			devolver_fragmentos = realloc(devolver_fragmentos, fragmentos * sizeof(int));
+			devolver_fragmentos[fragmentos-1] = -1;  
+ 
 		}
 		//despues se arranca con este arbol: 
 		if(N2 > b){
+			printf("N2");
 			//recursion,fragmentos crece, ¿que tanto crece?
 			int * revento_n_veces = explosion(N2, b);
 			int crece = sizeof(revento_n_veces) / sizeof(revento_n_veces[0]);
 			fragmentos = fragmentos + crece; 
 			devolver_fragmentos = realloc(devolver_fragmentos, fragmentos * sizeof(int));
 			for(int i = 0; i < crece; i++){
-				int posicion = fragmentos + i;
+				int posicion = fragmentos + i -1;
 				devolver_fragmentos[posicion] = revento_n_veces[i];
 			}
 		}else{
+			printf("N2f");
 			fragmentos++; 
 			devolver_fragmentos = realloc(devolver_fragmentos, fragmentos * sizeof(int));
-			devolver_fragmentos[fragmentos-1] = N2;  
+			devolver_fragmentos[fragmentos-1] = N2;
+			fragmentos++;
+			devolver_fragmentos = realloc(devolver_fragmentos, fragmentos * sizeof(int));
+			devolver_fragmentos[fragmentos-1] = -1;  
+
 
 		}
 	}else{
+		printf("-1");
 		//no es mayor a b, entonces se agrega -1 
 		fragmentos++; 
 		devolver_fragmentos = realloc(devolver_fragmentos, fragmentos * sizeof(int));
-		devolver_fragmentos[fragmentos-1] = -1;  
+		devolver_fragmentos[fragmentos-1] = -1; 
 	}
+	printf("devolver");
 	return devolver_fragmentos;
 	
 }
