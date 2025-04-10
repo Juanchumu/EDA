@@ -15,6 +15,7 @@ void menu();
 int returnSize = 0;
 int *returnColumnSizes = NULL;
 
+int medir(int * arr);
 //int ** subconjuntosQueSumanN(int conjunto[], int n);
 
 int main(void){
@@ -175,14 +176,22 @@ void menu(){
 			case 10:
 				printf("Ejercicio 10\n");
 				printf("Se necesita ingresar el numero:\n");
-				//int numero, bomba; 
-				//scanf("%d",&numero);
+				int numero, bomba; 
+				scanf("%d",&numero);
 				printf("Se necesita ingresar la bomba:\n");
-				//scanf("%d",&bomba);
-				//int reventar[100] = explosion(numero,bomba); 
-				//printf("El resultado es: [");
+				scanf("%d",&bomba);
+				int * reventar = explosion(numero,bomba); 
+				printf("El resultado es: [");
+				int cantidad_fragmentos =  medir(reventar);
+				for(int i = 0; i < cantidad_fragmentos; i++){
+					printf("%d", reventar[i]);
+					if((i+1)<cantidad_fragmentos){
+						printf(",");
+					}
+				}
+				printf("]\n");
 				//reccorido del array reventar 
-				//printf("Fin Ejercicio 10\n");
+				printf("Fin Ejercicio 10\n");
 				menu();
 				break;
 
@@ -281,10 +290,6 @@ int terminoSeridFibonacci(int k) {
 }
 
 //Ejercicio 4
-/*4.	Dados los números enteros m y n, construir una función recursiva que devuelva el 
-  cociente de ambos, calculando el mismo mediante restas sucesivas. Se deberá tener en cuenta que en el caso 
-  de que la división no sea exacta, se devolverán hasta 4 cifras decimales (si es necesario). */
-
 float division(int m, int n){
 	//m 64 n 5
 	float estado; 
@@ -397,9 +402,6 @@ char * ondaDigital(char * cadena){
 
 }
 // Ejercicio 8
-// Variables globales para poder acceder a tamaños desde fuera de subconjuntosQueSumanN
-//int returnSize = 0;
-//int *returnColumnSizes = NULL;
 
 //Funcion auxiliar 8
 void backtrack(int *nums, int n, int target, int idx,
@@ -455,15 +457,6 @@ int **subconjuntosQueSumanN(int conjunto[], int N) {
 
 
 // Ejercicio 9
-// Ejemplos:
-//32291 -> 1x2=  2. ultima cifra por 2  
-//3229 - 2 =     3227. resta 
-//3227 -> 7x2=   14. ult  
-//322 - 14 =     308 resta 
-//308 -> 8x2=    16 ult 
-//30 - 16 =      14 resta 
-//               14 -> Múltiplo de 7 
-//divisiblePor7 (32291) => verdadero
 bool divisiblePor7(int numero) {
 	//32291
     if (numero < 70) { // no 
@@ -476,9 +469,103 @@ bool divisiblePor7(int numero) {
 
     return divisiblePor7(nuevoNumero);
 }
-/*
-// Ejercicio 10
-int *explosion(int n, int b)
-{
+// //Ejercicio 10
+
+//Funcion auxiliar ejercicio 10:
+int medir(int * arr){
+	//devuelve el indice, se detiene cuando arr[i] = 0
+	//osea que termino el array
+	int indice = 0;
+	for(int i = 0; arr[i] != 0 ; i++){
+		indice++;
+	}
+	return indice;
 }
-*/
+int printar(int * arr){
+	int indice = 0;
+	printf("[");
+	for(int i = 0; arr[i] != 0 ; i++){
+		printf("%d,",arr[i]);
+		indice++;
+	}
+	printf("]\n");
+	return indice;
+}
+
+
+int *explosion(int n, int b){
+	int *devolver_fragmentos = NULL;
+	int fragmentos = 0;
+	//int * revento_n_veces = NULL;
+	int N1, N2;
+	if(n > b){
+		N1 = n / b; //10/3 = 3, no continua 
+		N2 = n - ( n / b ); // 6, continua
+		//primero se agrega el arbol de fragmentos generado a partir de N1:
+		if(N1 >b ){
+			printf("N1: %d \n", N1);
+			//recursion,fragmentos crece, ¿que tanto crece?
+			int * revento_n_veces = explosion(N1, b);
+			printf("hola");
+			int crece = medir(revento_n_veces);
+			fragmentos = fragmentos + crece; 
+			devolver_fragmentos = realloc(devolver_fragmentos, fragmentos * sizeof(int));
+			for(int i = 0; i < crece; i++){
+				int posicion = fragmentos + i - crece;
+				devolver_fragmentos[posicion] = revento_n_veces[i];
+			}
+			printf("hasta aca: ");
+			printar(devolver_fragmentos);
+			printar(revento_n_veces);
+		}else{
+			printf("N1f, se fija %d\n", N1);
+			//no hay recursion, se fijan dos fragmentos, N1 y -1.
+			fragmentos++; 
+			devolver_fragmentos = realloc(devolver_fragmentos, fragmentos * sizeof(int));
+			devolver_fragmentos[fragmentos-1] = N1;  
+ 
+		}
+		//despues se arranca con este arbol: 
+		if(N2 > b){
+			printf("N2: %d\n", N2);
+			//recursion,fragmentos crece, ¿que tanto crece?
+			int * revento_n_veces = explosion(N2, b);
+			int crece = medir(revento_n_veces);
+			printf("dv fragmentos antes:\n");
+			printar(devolver_fragmentos);
+			printf("el array crece %d \n", crece);
+			printf("fragmentos ahora valia %d\n",fragmentos);
+			fragmentos = fragmentos + crece;
+			printf("fragmentos ahora vale %d\n",fragmentos);
+			devolver_fragmentos = realloc(devolver_fragmentos, fragmentos * sizeof(int));
+			for(int i = 0; i < crece; i++){
+				int posicion = fragmentos + i - crece ;
+				devolver_fragmentos[posicion] = revento_n_veces[i];
+			}
+			printf("dv fragmentos despues:\n");
+			printar(devolver_fragmentos);
+			printf("lo que vale revento_nVeces:\n");
+			printar(revento_n_veces);
+		}else{
+			printf("N2f, se fija  %d\n", N2);
+			fragmentos++; 
+			devolver_fragmentos = realloc(devolver_fragmentos, fragmentos * sizeof(int));
+			devolver_fragmentos[fragmentos-1] = N2;
+			//printf("N2f, se fijo");
+			//medir(devolver_fragmentos);
+		}
+	}/*
+	else{
+		printf("-1");
+		//no es mayor a b, entonces se agrega -1 
+		fragmentos++; 
+		devolver_fragmentos = realloc(devolver_fragmentos, fragmentos * sizeof(int));
+		devolver_fragmentos[fragmentos-1] = -1; 
+	}
+	*/
+	printf("devolver\n");
+	printar(devolver_fragmentos);
+	return devolver_fragmentos;
+	
+}
+
