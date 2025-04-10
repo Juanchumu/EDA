@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "tp_1_recursividad.h"
 
-//funcion auxiliar palindromo 
+//prototipo auxiliar palindromo 
 char *recortar_extremos(char *original);
 
 //prototipos del menu
@@ -19,8 +19,9 @@ int *returnColumnSizes = NULL;
 //int ** subconjuntosQueSumanN(int conjunto[], int n);
 //por ende, hay que descomentarlo y comentar el otro prototipo 
 
-//funcion auxiliar Ejercicio 10
+//prototipos auxiliares del Ejercicio 10
 int medir(int * arr);
+int printar(int * arr);
 
 int main(void){
 	menu();
@@ -185,15 +186,8 @@ void menu(){
 				printf("Se necesita ingresar la bomba:\n");
 				scanf("%d",&bomba);
 				int * reventar = explosion(numero,bomba); 
-				printf("El resultado es: [");
-				int cantidad_fragmentos =  medir(reventar);
-				for(int i = 0; i < cantidad_fragmentos; i++){
-					printf("%d", reventar[i]);
-					if((i+1)<cantidad_fragmentos){
-						printf(",");
-					}
-				}
-				printf("]\n");
+				printf("El resultado es: ");
+				printar(reventar);
 				//reccorido del array reventar 
 				printf("Fin Ejercicio 10\n");
 				menu();
@@ -477,15 +471,29 @@ bool divisiblePor7(int numero) {
 
 //Funcion auxiliar ejercicio 10:
 int medir(int * arr){
-	//devuelve el indice, se detiene cuando arr[i] = 0
+	//devuelve el indice, se detiene cuando arr[i] = -1
 	//osea que termino el array
 	int indice = 0;
-	for(int i = 0; arr[i] != 0 ; i++){
+	while(arr[indice] != -1){
 		indice++;
 	}
+	indice++;
 	return indice;
 }
-
+int printar(int * arr){
+	int indice = 0;
+	printf("[");
+	while(arr[indice] != -1){
+		printf("%d",arr[indice]);
+		if(arr[indice+1] != -1){
+			printf(",");
+		}
+		indice++;
+	}
+	indice++;
+	printf("]\n");
+	return indice;
+}
 
 int *explosion(int n, int b){
 	int *devolver_fragmentos = NULL;
@@ -529,6 +537,9 @@ int *explosion(int n, int b){
 			devolver_fragmentos[fragmentos-1] = N2;
 		}
 	}
+	fragmentos++; 
+	devolver_fragmentos = realloc(devolver_fragmentos, fragmentos * sizeof(int));
+	devolver_fragmentos[fragmentos-1] = -1;
 	return devolver_fragmentos;
 	
 }
