@@ -9,6 +9,14 @@ char *recortar_extremos(char *original);
 void menu_intro();
 void menu();
 
+//prototivo funcion 8:
+// Ejercicio 8
+// Variables globales para poder acceder a tamaños desde fuera de subconjuntosQueSumanN
+int returnSize = 0;
+int *returnColumnSizes = NULL;
+
+//int ** subconjuntosQueSumanN(int conjunto[], int n);
+
 int main(void){
 	menu();
 	return 0; 
@@ -96,6 +104,7 @@ void menu(){
 			case 7:
 				printf("Ejercicio 7\n");
 				printf("Se necesita ingresar la onda codificada:\n");
+				printf("Nota: se requieren letras mayusculas\n");
 				char onda[100]; 
 				scanf("%s",onda);
 				printf("El resultado es: %s\n", ondaDigital(onda));
@@ -104,26 +113,62 @@ void menu(){
 				break;
 			case 8:
 				printf("Ejercicio 8\n");
-				printf("Se necesita ingresar varias cosas :\n");
-				//no esta hecho
-				//char onda_1[100]; 
-				//scanf("%c",onda_1);
-				//void subconjuntosQueSumanN(int conjunto[], int tamano, int n, char **output);
-				//printf("El resultado es: %s\n", ondaDigital(onda_1));
+				printf("Se necesita ingresar varias cosas, se utiliza\n");
+				printf("la plantilla: {10,3,1,7,4,2,-1}, con N 7 \n");
+				// Usamos -1 como terminador para saber el tamaño del arreglo
+				// //int conjunto[] = {2, 3, 5, 7, -1};
+				int conjunto[] = {10,3,1,7,4,2,-1};
+				int N = 7;
+				int **resultados = subconjuntosQueSumanN(conjunto, N);
+				printf("R: [");
+				for (int i = 0; i < returnSize; i++) {
+					printf("{ ");
+					for (int j = 0; j < returnColumnSizes[i]; j++) {
+						printf("%d ", resultados[i][j]);
+					}
+					printf("}");
+					if((i+1)<returnSize){
+						printf(",");
+					}
+					free(resultados[i]);
+				}
+				printf("]\n");
+				free(resultados);
+				free(returnColumnSizes);
+				//otra plantilla 
+				printf("la plantilla: {10,3,1,7,4,2,-1}, con N 10 \n");
+				// Usamos -1 como terminador para saber el tamaño del arreglo
+				// //int conjunto[] = {2, 3, 5, 7, -1};
+				int A_x = 10;
+				int **resultados_A = subconjuntosQueSumanN(conjunto, A_x);
+				printf("R: [");
+				for (int i = 0; i < returnSize; i++) {
+					printf("{ ");
+					for (int j = 0; j < returnColumnSizes[i]; j++) {
+						printf("%d ", resultados_A[i][j]);
+					}
+					printf("}");
+					if((i+1)<returnSize){
+						printf(",");
+					}
+					free(resultados_A[i]);
+				}
+				printf("]\n");
+				free(resultados_A);
+				free(returnColumnSizes);
 				printf("Fin Ejercicio 8\n");
 				menu();
 				break;
 			case 9:
 				printf("Ejercicio 9\n");
 				printf("Se necesita ingresar un numero:\n");
-				//int siete; 
-				//scanf("%d",&siete);
-				//if(divisiblePor7(siete)){
-				//	printf("%d es divisible por 7\n", siete);
-				//}else{	
-				//	printf("%d no es divisible por 7\n", siete);
-				//}
-
+				int siete; 
+				scanf("%d",&siete);
+				if(divisiblePor7(siete)){
+					printf("%d es divisible por 7\n", siete);
+				}else{	
+					printf("%d no es divisible por 7\n", siete);
+				}
 				printf("Fin Ejercicio 9\n");
 				menu();
 				break;
@@ -352,30 +397,86 @@ char * ondaDigital(char * cadena){
 
 }
 // Ejercicio 8
-//int **subconjuntosQueSumanN(int conjunto[], int n)
-//{
-//}
+// Variables globales para poder acceder a tamaños desde fuera de subconjuntosQueSumanN
+//int returnSize = 0;
+//int *returnColumnSizes = NULL;
+
+//Funcion auxiliar 8
+void backtrack(int *nums, int n, int target, int idx,
+               int *temp, int tempSize,
+               int **res, int *resSize, int **colSizes) {
+    if (target == 0) {
+        res[*resSize] = malloc(tempSize * sizeof(int));
+        colSizes[*resSize] = malloc(sizeof(int));
+        for (int i = 0; i < tempSize; i++)
+            res[*resSize][i] = temp[i];
+        colSizes[*resSize][0] = tempSize;
+        (*resSize)++;
+        return;
+    }
+
+    if (target < 0 || idx >= n)
+        return;
+
+    // Incluir nums[idx]
+    temp[tempSize] = nums[idx];
+    backtrack(nums, n, target - nums[idx], idx + 1, temp, tempSize + 1, res, resSize, colSizes);
+
+    // No incluir nums[idx]
+    backtrack(nums, n, target, idx + 1, temp, tempSize, res, resSize, colSizes);
+}
+
+int **subconjuntosQueSumanN(int conjunto[], int N) {
+    int n = 0;
+    // Calcular longitud del conjunto
+    while (conjunto[n] != -1) n++;
+
+    int max = 1 << n; // como máximo 2^n subconjuntos
+    int **res = malloc(max * sizeof(int *));
+    int **colSizes = malloc(max * sizeof(int *));
+    int *temp = malloc(n * sizeof(int));
+
+    returnSize = 0;
+
+    backtrack(conjunto, n, N, 0, temp, 0, res, &returnSize, colSizes);
+
+    // Copiar tamaños a variable global para que el usuario pueda acceder
+    returnColumnSizes = malloc(returnSize * sizeof(int));
+    for (int i = 0; i < returnSize; i++) {
+        returnColumnSizes[i] = colSizes[i][0];
+        free(colSizes[i]);
+    }
+
+    free(colSizes);
+    free(temp);
+
+    return res;
+}
+
 
 // Ejercicio 9
-/*
-   bool divisiblePor7(int n)
-   {
-   if (n <= 70)
-   {
-   if ((n % 7) == 0)
-   {
-   return true;
-   }
-   else
-   {
-   return false;
-   }
-   }
-   int parteDecimal = round((((n / 10.0f) - (n / 10)) * 10));
-   int parteEntera = round(n / 10) - parteDecimal * 2;
-   divisiblePor7(parteEntera);
-   }
+// Ejemplos:
+//32291 -> 1x2=  2. ultima cifra por 2  
+//3229 - 2 =     3227. resta 
+//3227 -> 7x2=   14. ult  
+//322 - 14 =     308 resta 
+//308 -> 8x2=    16 ult 
+//30 - 16 =      14 resta 
+//               14 -> Múltiplo de 7 
+//divisiblePor7 (32291) => verdadero
+bool divisiblePor7(int numero) {
+	//32291
+    if (numero < 70) { // no 
+        return numero % 7 == 0;
+    }
+    int ultimaCifra = numero % 10;
+    int resto = numero / 10; //ult 
 
+    int nuevoNumero = resto - 2 * ultimaCifra; //resta 
+
+    return divisiblePor7(nuevoNumero);
+}
+/*
 // Ejercicio 10
 int *explosion(int n, int b)
 {
