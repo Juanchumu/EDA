@@ -6,11 +6,11 @@
 #define TP_2_Listas
 
 // P2
-/*typedef struct
+typedef struct
 {
     float resultado1;
     float resultado2;
-} Resultados;*/
+} Resultados;
 
 typedef struct resultadoStruct
 {
