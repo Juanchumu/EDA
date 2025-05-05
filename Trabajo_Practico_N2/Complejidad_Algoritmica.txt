@@ -1,0 +1,9 @@
+tp2_4.c : 
+Utilizando los TAD de punteros: Complejidad Orden Lineal O(n)
+Utilizando los TAD de cursores: Complejidad Orden Lineal O(n)
+Utilizando los TAD de Arreglos: Complejidad Orden Lineal O(n)
+
+tp2_6.c : 
+Utilizando los TAD de punteros: Complejidad Orden Cuadratico O(n^2)
+Utilizando los TAD de cursores: Complejidad Orden Cuadratico O(n^2)
+Utilizando los TAD de Arreglos: Complejidad Orden Cuadratico O(n^2)
