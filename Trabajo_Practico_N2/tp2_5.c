@@ -9,19 +9,11 @@
 float potencia(float x, int cantidad);
 
 int main(){
-	int vec1[4] = {2,5,7,3};
-	int vec2[4] = {8,20,28,12};
-	int vec3[4] = {2,5,7,3};
-	Lista l1 = l_desde_array(vec1, 4);
-	Lista l2 = l_desde_array(vec2, 4);
-	Lista l3 = l_desde_array(vec3, 4);
-	l_mostrar(l1);
-	l_mostrar(l2);
-	float primer_test = evaluarPoliomio(l1, 5);
-	printf("para l1, f(5): %f\n", primer_test);
 	Lista test = l_crear();
 	hacerPolinomio(test);
-	float segundo_test = evaluarPoliomio(l1, 5);
+	float segundo_test = evaluarPoliomio(test, 5);
+	printf("para l1, f(5): %f\n", segundo_test);
+	Lista test2 = calcularRango(test, 0.5, 5.5, 0.5);
 	
 }
 
@@ -46,15 +38,11 @@ void hacerPolinomio(Lista list){
 evaluado en ese valor de x.*/
 float evaluarPoliomio(Lista list, float x){
 	Iterador ite = iterador(list);
-	TipoElemento te = siguiente(ite);
-	float suma = te->clave; //sumo el primer termino del polinomio
-	int grado = 1;
-	//continuo con los siguientes terminos del polinomio
-	//printf("suma %f\n", suma);
+	TipoElemento te;
+	float suma = 0;
 	while(hay_siguiente(ite)){
 		te = siguiente(ite);
-		suma = suma + ( te->clave * potencia(x, grado) );
-		grado++;
+		suma = suma + ( *((float*)te->valor ) * potencia(x, te->clave) );
 		//printf("suma %f\n", suma);
 	}
 	//Devuelve lo que tiene 
@@ -69,14 +57,26 @@ float potencia(float x, int cantidad){
 	return suma;
 }
 
-
 /*Función que calcula el polinomio en un rango de valores de x.
 Recibe: el polinomio, los valores mínimo y máximo del intervalo y la diferencia entre cada valor 
 tomado del intervalo.
 Devuelve: una lista de valores reales apuntados por "valor", y que representan los 
 valores del polinomio en los sucesivos puntos del intervalo.*/
 Lista calcularRango(Lista list, double x, double y, double sumando){
+	Lista no_se_muestra = l_crear();
+	Iterador ite = iterador(list);
+	TipoElemento te;
+	int contador = 0; 
+	for(x; x<y; x = x + sumando){
+		te = te_crear(contador);
 
+		float * puntero = malloc(sizeof(float));
+		*puntero = evaluarPoliomio(list, x);
+		te->valor = puntero;
+		printf("%f\n", *(float*)te->valor );
+		l_agregar(no_se_muestra, te);
+	}
+	return no_se_muestra;
 }
 
 
