@@ -1,16 +1,20 @@
-#include "tp_2_listas.h"
-#include "listas_punteros.c"
-#include "tipo_elemento.c"
+//#include "tp_2_listas.h"
+//#include "listas_punteros.c"
+//#include "tipo_elemento.c"
 
-#include <time.h>
-#include <stdlib.h>
-#include <stdio.h>
-Lista generar_lista_aleatoria();
+//#include "tp2_lista_array.c"
+
+//#include <time.h>
+//#include <stdlib.h>
+//#include <stdio.h>
+
+
 float promediosListaAux(Iterador i, int suma, int cantidad);
 int minimo(Lista l1);
 int minimoAux(Iterador i, int min_contender);
 int buscar_pos(Lista l1, int clave );
 
+/*
 int main(){
 	Lista listita = generar_lista_aleatoria();
 	l_mostrar(listita);
@@ -28,15 +32,8 @@ int main(){
 	printf("min l1 %d, pos: %d, minl2 %d, pos: %d \n", hola.valor, hola.pos, hola.valor_2, hola.pos_2 );
 
 }
+*/
 
-Lista generar_lista_aleatoria(){
-	Lista lista_aleatoria = l_crear();
-	for(int i = 0; i < 100; i++){
-		TipoElemento te = te_crear( (rand()%100) );
-		l_agregar(lista_aleatoria, te);
-	}
-	return lista_aleatoria;
-}
 /*
 // P2
 typedef struct

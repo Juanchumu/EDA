@@ -1,3 +1,4 @@
+/*
 #include "listas_punteros.c"
 #include "tp_2_listas.h"
 #include "tp2_lista_array.c"
@@ -19,6 +20,8 @@ int main(){
 	}
 	return 0;
 }
+*/
+
 // P6
 bool esSublista(Lista l1, Lista l2){
 	Iterador ite = iterador(l2);

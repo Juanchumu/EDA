@@ -1,10 +1,11 @@
+/*
 #include <stdio.h>
 #include "tp_2_listas.h"
 #include "tipo_elemento.c"
 #include "listas_punteros.c"
 #include "tp2_lista_array.c"
 
-
+//Main de pruebas 
 int main(){
 	int vec1[4] = {2,5,7,3};
 	int vec2[4] = {8,20,28,12};
@@ -19,6 +20,7 @@ int main(){
 	printf("Resultado l1 l3 %d \n", CompararListas(l1, l3));
 	return 0;
 }
+*/
 // P4 Retorna 1 si L1 > L2, 2 si L2 > 1, 0 si son iguales
 int CompararListas(Lista l1, Lista L2){
 	Iterador ite1, ite2;

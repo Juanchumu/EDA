@@ -1,11 +1,13 @@
+/*
 #include <stdio.h>
 #include "tipo_elemento.c"
 #include "listas_punteros.c"
 #include "tp_2_listas.h"
+#include "tp2_lista_array.c"
 
 
-Lista l_desde_array(int arr[4], int largo );
 
+ //main de pruebas
 int main(void){
 	int vec1[4] = {2,5,7,3};
 	int vec2[4] = {8,20,28,12};
@@ -23,15 +25,8 @@ int main(void){
 	}
 	return 0;
 }
+*/
 
-Lista l_desde_array(int arr[], int largo ){
-	Lista arrays = l_crear();
-	for(int i = 0; i < largo; i++){
-		TipoElemento te = te_crear(arr[i]);
-		l_agregar(arrays, te);
-	}
-	return arrays;
-}
 
 ResultadosMul multiplo(Lista l1, Lista l2){
 	ResultadosMul r;

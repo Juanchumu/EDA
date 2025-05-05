@@ -1,5 +1,5 @@
-#include <stdlib.h>
-#include <stdio.h>
+//#include <stdlib.h>
+//#include <stdio.h>
 #include "listas.h"
 
 //nota: no hay main en este archivo
@@ -31,7 +31,7 @@ bool l_es_llena(Lista lista){
 	return lista->cantidad == TAMANIO_MAXIMO;
 }
 
-int l_ongitud(Lista lista){
+int l_longitud(Lista lista){
 	return lista->cantidad;
 }
 bool l_agregar(Lista lista, TipoElemento elemento){
@@ -90,7 +90,7 @@ bool l_insertar(Lista lista, TipoElemento elemento, int pos){
 ///  Eliminiar
 bool l_eliminar(Lista lista, int pos){
 	//Si no se ubica en las puntas
-	if(1 <= pos && pos <= longitud(lista)){
+	if(1 <= pos && pos <= l_longitud(lista)){
 		for(int i = pos - 1; i < lista->cantidad; i++){
 			lista->valores[i] = lista->valores[i + 1];
 		}

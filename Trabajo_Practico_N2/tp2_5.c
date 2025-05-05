@@ -1,13 +1,13 @@
+/*
+
 #include <stdio.h>
 #include "tipo_elemento.c"
 #include "listas_punteros.c"
 #include "tp2_lista_array.c"
 #include "tp_2_listas.h"
-
-
-
+*/
 float potencia(float x, int cantidad);
-
+/*
 int main(){
 	Lista test = l_crear();
 	hacerPolinomio(test);
@@ -16,6 +16,8 @@ int main(){
 	Lista test2 = calcularRango(test, 0.5, 5.5, 0.5);
 	
 }
+
+*/
 
 // P5
 /*Función que recibe una lista vacía y la carga con los términos del polinomio; los 
@@ -68,12 +70,11 @@ Lista calcularRango(Lista list, double x, double y, double sumando){
 	TipoElemento te;
 	int contador = 0; 
 	for(x; x<y; x = x + sumando){
-		te = te_crear(contador);
-
+		te = te_crear(x);
 		float * puntero = malloc(sizeof(float));
 		*puntero = evaluarPoliomio(list, x);
 		te->valor = puntero;
-		printf("%f\n", *(float*)te->valor );
+		//printf("%f\n", *(float*)te->valor );
 		l_agregar(no_se_muestra, te);
 	}
 	return no_se_muestra;

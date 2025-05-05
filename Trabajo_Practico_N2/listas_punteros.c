@@ -1,6 +1,6 @@
 #include "listas.h"
-#include <stdlib.h>
-#include <stdio.h>
+//#include <stdlib.h>
+//#include <stdio.h>
 static const int TAMANIO_MAXIMO = 100;
 struct Nodo {
 	// Se agrega el concepto de Nodo
